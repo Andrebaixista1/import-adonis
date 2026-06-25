@@ -1,21 +1,17 @@
 // Restringe o acesso ao site: somente os IPs abaixo conseguem abrir.
-// Roda na Edge da Vercel, antes de servir qualquer arquivo estatico.
-export const config = {
-  matcher: '/:path*',
-};
-
+// Vercel Edge Middleware — sem `config.matcher`, roda em TODAS as requisicoes.
 const ALLOWED_IPS = ['45.188.243.80'];
 
 export default function middleware(request) {
-  const realIp = request.headers.get('x-real-ip') || '';
   const xff = request.headers.get('x-forwarded-for') || '';
-  const ip = (realIp || xff.split(',')[0] || '').trim();
+  const realIp = request.headers.get('x-real-ip') || '';
+  const ip = (xff.split(',')[0] || realIp || '').trim();
 
   if (!ALLOWED_IPS.includes(ip)) {
-    return new Response(
-      'Acesso restrito. Este site so pode ser acessado pela rede autorizada.',
-      { status: 403, headers: { 'content-type': 'text/plain; charset=utf-8' } }
-    );
+    return new Response('Acesso restrito. Site liberado apenas para a rede autorizada.', {
+      status: 403,
+      headers: { 'content-type': 'text/plain; charset=utf-8' },
+    });
   }
-  // Sem retorno => segue para o conteudo.
+  // IP autorizado: sem retorno => segue para o conteudo.
 }
