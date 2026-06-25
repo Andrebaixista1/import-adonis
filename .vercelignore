@@ -1,0 +1,10 @@
+node_modules
+.env.local
+.env
+.claude
+api
+server.js
+sql
+package.json
+package-lock.json
+modelo-importacao.xlsx
