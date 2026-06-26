@@ -1143,10 +1143,10 @@
     }
 
     function baixarModelo() {
-      const colunas = ['Nº Contrato', 'Nome', 'CPF', 'Telefone', 'CEP', 'equipe_nome', 'tabela', 'Prazo'];
-      const exemplo = ['123456', 'João da Silva', '12345678901', '11999999999', '01310100', 'PARCEIRO M2', '404 - PORTABILIDADE + REFINANCIAMENTO', 84];
+      const colunas = ['Nº Contrato', 'Nome', 'CPF', 'Telefone', 'CEP', 'equipe_nome', 'id usuario', 'tabela', 'id prazo', 'Prazo'];
+      const exemplo = ['123456', 'João da Silva', '12345678901', '11999999999', '01310100', 'PARCEIRO M2', 1286, '404 - PORTABILIDADE + REFINANCIAMENTO', 2405, 84];
       const ws = XLSX.utils.aoa_to_sheet([colunas, exemplo]);
-      ws['!cols'] = [16, 22, 16, 16, 12, 28, 50, 10].map(w => ({ wch: w }));
+      ws['!cols'] = [16, 22, 16, 16, 12, 28, 12, 50, 12, 10].map(w => ({ wch: w }));
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Propostas');
       XLSX.writeFile(wb, 'modelo-importacao.xlsx');
